@@ -1,0 +1,11 @@
+//
+//  Keys.xcconfig
+//  CityCast
+//
+//  Created by Rushikesh Suradkar on 19/09/25.
+//
+
+// Configuration settings file format documentation can be found at:
+// https://developer.apple.com/documentation/xcode/adding-a-build-configuration-file-to-your-project
+
+RAPIDAPI_KEY = "PASTE_YOUR_RAPIDAPI_KEY_HERE"

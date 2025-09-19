@@ -14,4 +14,16 @@ enum Constants {
         static let recentsTitle = "Recent Searches"
         static let emptyRecentsMessage = "Your recent searches will appear here."
     }
+    
+    enum API {
+        static let geoDBBaseURL = "https://wft-geo-db.p.rapidapi.com"
+        static let rapidAPIHost = "wft-geo-db.p.rapidapi.com"
+        
+        static var rapidAPIKey: String {
+            guard let key = Bundle.main.object(forInfoDictionaryKey: "RAPIDAPI_KEY") as? String else {
+                fatalError("RAPIDAPI_KEY not found in Info.plist. Make sure you've set it up correctly in Keys.xcconfig.")
+            }
+            return key
+        }
+    }
 }
