@@ -29,6 +29,7 @@ struct RecentSearchesListView: View {
             }
         }
         .listStyle(.plain)
+        .cornerRadius(10)
         .background(Color.clear)
         .padding(.horizontal)
     }

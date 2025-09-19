@@ -22,7 +22,7 @@ class SearchResultsViewModel: ObservableObject {
     @Published private(set) var state: SearchState = .idle
 
     private let apiService: APIService
-    private let query: String
+    let query: String
 
     init(query: String, apiService: APIService = .shared) {
         self.query = query

@@ -8,14 +8,25 @@
 import SwiftUI
 
 struct SearchBarView: View {
-    // A binding allows this view to modify the searchText from the parent view.
     @Binding var text: String
+    
+    var onSearch: () -> Void
+    
+    private var isSearchButtonEnabled: Bool {
+        text.count >= 3
+    }
     
     var body: some View {
         HStack {
             Image(systemName: "magnifyingglass")
                 .foregroundColor(.gray)
+            
             TextField(Constants.Home.searchPlaceholder, text: $text)
+            
+            Button(action: onSearch) {
+                Text("Search")
+            }
+            .disabled(!isSearchButtonEnabled)
         }
         .padding()
         .background(Color(.systemGray6))
@@ -29,5 +40,5 @@ struct SearchBarView: View {
 }
 
 #Preview {
-    SearchBarView(text: .constant(""))
+    SearchBarView(text: .constant(""), onSearch: {})
 }

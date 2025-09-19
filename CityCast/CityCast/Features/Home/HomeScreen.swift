@@ -10,19 +10,27 @@ import SwiftUI
 struct HomeScreen: View {
 
     @State private var searchText: String = ""
+    @State private var searchIsActive = false
     let sampleSearches: [String] = ["London", "Pune", "Mumbai", "New Delhi", "Bangalore"]
 
     var body: some View {
-        NavigationView {
+        NavigationStack {
             ZStack {
                 Color.appBackground.ignoresSafeArea()
 
                 VStack(alignment: .leading, spacing: 0) {
-                    SearchBarView(text: $searchText)
+                    SearchBarView(text: $searchText) {
+                        searchIsActive = true
+                    }
+                    
                     RecentSearchesListView(searches: sampleSearches)
                 }
             }
             .navigationTitle(Constants.Home.navigationTitle)
+            .navigationBarTitleDisplayMode(.inline)
+            .navigationDestination(isPresented: $searchIsActive) {
+                SearchResultsScreen(query: searchText)
+            }
         }
     }
 }

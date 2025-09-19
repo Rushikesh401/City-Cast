@@ -7,46 +7,66 @@
 
 import SwiftUI
 
+import SwiftUI
+
 struct SearchResultsScreen: View {
     
-    // Sample data to build the UI.
-    let sampleCities: [City] = [
-        City(id: 1, name: "Paris", country: "France", region: "Île-de-France", latitude: 48.85, longitude: 2.35),
-        City(id: 2, name: "Paris", country: "United States", region: "Texas", latitude: 33.66, longitude: -95.55),
-        City(id: 3, name: "Paris", country: "United States", region: "Tennessee", latitude: 36.30, longitude: -88.32)
-    ]
+    @StateObject private var searchViewModel: SearchResultsViewModel
     
-    @State private var isLoading = true
+    init(query: String) {
+        _searchViewModel = StateObject(wrappedValue: SearchResultsViewModel(query: query))
+    }
     
     var body: some View {
         ZStack {
             Color.appBackground.ignoresSafeArea()
-            VStack {
-                if isLoading {
-                    ProgressView()
-                        .padding()
+            
+            switch searchViewModel.state {
+            case .idle, .loading:
+                ProgressView()
+                
+            case .success:
+              
+                if searchViewModel.cities.isEmpty {
+                    Text(Constants.SearchResults.noResultsFound(for: searchViewModel.query))
+                        .fontWeight(.bold)
+
+                } else {
+                    
+                    VStack {
+                        List(searchViewModel.cities) { city in
+                            VStack(alignment: .leading) {
+                                Text(city.name)
+                                    .font(.headline)
+                                Text("\(city.region), \(city.country)")
+                                    .font(.subheadline)
+                                    .foregroundColor(.gray)
+                            }
+                            .padding(.vertical, 4)
+                        }
+                        .listStyle(.plain)
+                        .cornerRadius(10)
+                    }
+                    .padding(.horizontal)
                 }
                 
-                List(sampleCities) { city in
-                    VStack(alignment: .leading) {
-                        Text(city.name)
-                            .font(.headline)
-                        Text("\(city.region), \(city.country)")
-                            .font(.subheadline)
-                            .foregroundColor(.gray)
-                    }
-                    .padding(.vertical, 4)
-                }
-                .listStyle(.plain)
+            case .error(let message):
+                Text(message)
+                    .foregroundColor(.red)
+                    .padding()
+                    .fontWeight(.bold)
             }
         }
-        .navigationTitle("Results for 'Paris'")
+        .navigationTitle(Constants.SearchResults.resultFor(city: searchViewModel.query))
         .navigationBarTitleDisplayMode(.inline)
+        .task {
+            await searchViewModel.search()
+        }
     }
 }
 
 #Preview {
     NavigationView {
-        SearchResultsScreen()
+        SearchResultsScreen(query: "Paris")
     }
 }

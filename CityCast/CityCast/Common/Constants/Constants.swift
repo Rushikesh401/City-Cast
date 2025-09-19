@@ -30,4 +30,14 @@ enum Constants {
     enum Settings {
         static let showLogs = true
     }
+    
+    enum SearchResults {
+        static func noResultsFound(for query: String) -> String {
+            return "No cities found for '\(query)'."
+        }
+        
+        static func resultFor(city: String) -> String {
+            return "Results for \(city)"
+        }
+    }
 }
