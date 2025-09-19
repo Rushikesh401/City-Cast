@@ -9,6 +9,7 @@ import SwiftUI
 
 struct SearchBarView: View {
     @Binding var text: String
+    @FocusState.Binding var isFocused: Bool
     
     var onSearch: () -> Void
     
@@ -16,12 +17,15 @@ struct SearchBarView: View {
         text.count >= 3
     }
     
+    @State private var isUserTyping = false
+    
     var body: some View {
         HStack {
             Image(systemName: "magnifyingglass")
                 .foregroundColor(.gray)
             
             TextField(Constants.Home.searchPlaceholder, text: $text)
+                .focused($isFocused)
             
             Button(action: onSearch) {
                 Text("Search")
@@ -33,12 +37,12 @@ struct SearchBarView: View {
         .cornerRadius(10)
         .overlay(
             RoundedRectangle(cornerRadius: 10)
-                .stroke(Color(.systemGray4), lineWidth: 1)
+                .stroke(isFocused ? Color.black : Color(.systemGray4), lineWidth: 1)
         )
         .padding()
     }
 }
 
 #Preview {
-    SearchBarView(text: .constant(""), onSearch: {})
+    SearchBarView(text: .constant(""), isFocused: FocusState<Bool>().projectedValue, onSearch: {})
 }

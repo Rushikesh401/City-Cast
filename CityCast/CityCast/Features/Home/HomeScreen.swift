@@ -13,6 +13,8 @@ struct HomeScreen: View {
 
     @State private var searchText: String = ""
     @State private var searchIsActive = false
+    @FocusState private var isSearchFieldFocused: Bool
+
 //    let sampleSearches: [String] = ["London", "Pune", "Mumbai", "New Delhi", "Bangalore"]
 
     var body: some View {
@@ -21,7 +23,7 @@ struct HomeScreen: View {
                 Color.appBackground.ignoresSafeArea()
 
                 VStack(alignment: .leading, spacing: 0) {
-                    SearchBarView(text: $searchText) {
+                    SearchBarView(text: $searchText, isFocused: $isSearchFieldFocused) {
                         if !searchText.trimmingCharacters(in: .whitespaces).isEmpty {
                             homeViewModel.addSearch(term: searchText)
                             searchIsActive = true
@@ -38,6 +40,9 @@ struct HomeScreen: View {
                         }
                     )
                 }
+            }
+            .onTapGesture {
+                isSearchFieldFocused = false
             }
             .navigationTitle(Constants.Home.navigationTitle)
             .navigationBarTitleDisplayMode(.inline)
