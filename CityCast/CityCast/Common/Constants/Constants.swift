@@ -26,4 +26,8 @@ enum Constants {
             return key
         }
     }
+    
+    enum Settings {
+        static let showLogs = true
+    }
 }
