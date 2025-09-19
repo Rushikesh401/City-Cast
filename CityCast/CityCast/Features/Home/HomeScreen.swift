@@ -9,9 +9,11 @@ import SwiftUI
 
 struct HomeScreen: View {
 
+    @StateObject private var homeViewModel = HomeViewModel()
+
     @State private var searchText: String = ""
     @State private var searchIsActive = false
-    let sampleSearches: [String] = ["London", "Pune", "Mumbai", "New Delhi", "Bangalore"]
+//    let sampleSearches: [String] = ["London", "Pune", "Mumbai", "New Delhi", "Bangalore"]
 
     var body: some View {
         NavigationStack {
@@ -20,10 +22,21 @@ struct HomeScreen: View {
 
                 VStack(alignment: .leading, spacing: 0) {
                     SearchBarView(text: $searchText) {
-                        searchIsActive = true
+                        if !searchText.trimmingCharacters(in: .whitespaces).isEmpty {
+                            homeViewModel.addSearch(term: searchText)
+                            searchIsActive = true
+                        }
                     }
                     
-                    RecentSearchesListView(searches: sampleSearches)
+                    RecentSearchesListView(
+                        searches: homeViewModel.recentSearches,
+                        onResubmit: { term in
+                            homeViewModel.resubmitSearch(term: term, isActive: &searchIsActive, searchText: &searchText)
+                        },
+                        onDelete: { offsets in
+                            homeViewModel.deleteSearch(at: offsets)
+                        }
+                    )
                 }
             }
             .navigationTitle(Constants.Home.navigationTitle)

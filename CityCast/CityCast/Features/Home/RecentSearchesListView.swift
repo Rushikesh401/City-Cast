@@ -11,6 +11,9 @@ import SwiftUI
 
 struct RecentSearchesListView: View {
     let searches: [String]
+    
+    var onResubmit: (String) -> Void
+    var onDelete: (IndexSet) -> Void
 
     var body: some View {
         Text(Constants.Home.recentsTitle)
@@ -23,9 +26,13 @@ struct RecentSearchesListView: View {
                     .foregroundColor(.gray)
             } else {
                 ForEach(searches, id: \.self) { search in
-                    Text(search)
-                        .font(.body)
+                    Button(action: { onResubmit(search) }) {
+                        Text(search)
+                            .font(.body)
+                            .foregroundColor(Color.primary)
+                    }
                 }
+                .onDelete(perform: onDelete)
             }
         }
         .listStyle(.plain)
@@ -36,5 +43,13 @@ struct RecentSearchesListView: View {
 }
 
 #Preview {
-    RecentSearchesListView(searches: ["London", "New York", "Paris"])
+    RecentSearchesListView(
+        searches: ["London", "New York", "Paris"],
+        onResubmit: { term in
+            print("Resubmit: \(term)")
+        },
+        onDelete: { offsets in
+            print("Delete at: \(offsets)")
+        }
+    )
 }
