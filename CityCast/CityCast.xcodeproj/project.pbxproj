@@ -30,11 +30,6 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		55C3E72D2E7DBF8000E9D0D8 /* CityCast */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = CityCast;
-			sourceTree = "<group>";
-		};
 		55C3E73B2E7DBF8200E9D0D8 /* CityCastTests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = CityCastTests;
@@ -43,6 +38,11 @@
 		55C3E7452E7DBF8200E9D0D8 /* CityCastUITests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = CityCastUITests;
+			sourceTree = "<group>";
+		};
+		55C3E76B2E7DC89C00E9D0D8 /* CityCast */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = CityCast;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -75,7 +75,7 @@
 		55C3E7222E7DBF8000E9D0D8 = {
 			isa = PBXGroup;
 			children = (
-				55C3E72D2E7DBF8000E9D0D8 /* CityCast */,
+				55C3E76B2E7DC89C00E9D0D8 /* CityCast */,
 				55C3E73B2E7DBF8200E9D0D8 /* CityCastTests */,
 				55C3E7452E7DBF8200E9D0D8 /* CityCastUITests */,
 				55C3E72C2E7DBF8000E9D0D8 /* Products */,
@@ -108,7 +108,7 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
-				55C3E72D2E7DBF8000E9D0D8 /* CityCast */,
+				55C3E76B2E7DC89C00E9D0D8 /* CityCast */,
 			);
 			name = CityCast;
 			packageProductDependencies = (
