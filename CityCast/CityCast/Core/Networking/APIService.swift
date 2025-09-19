@@ -18,8 +18,11 @@ class APIService {
         components.queryItems = endpoint.queryItems
 
         guard let url = components.url else {
+            AppLogger.shared.log("Invalid URL created from endpoint: \(endpoint)")
             throw APIError.invalidURL
         }
+        
+        AppLogger.shared.log("Requesting URL: \(url.absoluteString)")
 
         var request = URLRequest(url: url)
         request.httpMethod = endpoint.method
@@ -28,6 +31,7 @@ class APIService {
         let (data, response) = try await URLSession.shared.data(for: request)
 
         guard let httpResponse = response as? HTTPURLResponse, 200..<300 ~= httpResponse.statusCode else {
+            AppLogger.shared.log("Invalid response. Status Code: \((response as? HTTPURLResponse)?.statusCode ?? 0)")
             throw APIError.invalidResponse
         }
 
@@ -35,6 +39,7 @@ class APIService {
             let responseObject = try JSONDecoder().decode(T.self, from: data)
             return responseObject
         } catch {
+            AppLogger.shared.log("Failed to decode JSON: \(error)")
             throw APIError.decodingFailed(error)
         }
     }

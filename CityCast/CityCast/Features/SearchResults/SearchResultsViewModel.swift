@@ -30,13 +30,18 @@ class SearchResultsViewModel: ObservableObject {
     }
 
     func search() async {
+        AppLogger.shared.log("Searching for cities with query: '\(query)'")
         state = .loading
 
         do {
             let fetchedCities = try await apiService.fetchCities(named: query)
             self.cities = fetchedCities
             self.state = .success
+            
+            AppLogger.shared.log("Successfully fetched \(fetchedCities.count) cities.")
+            
         } catch {
+            AppLogger.shared.log("Error fetching cities: \(error.localizedDescription)")
             self.state = .error(message: "Failed to fetch cities. Please try again.")
         }
     }
