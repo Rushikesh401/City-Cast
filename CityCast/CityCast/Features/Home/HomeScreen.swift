@@ -49,6 +49,13 @@ struct HomeScreen: View {
             .navigationDestination(isPresented: $searchIsActive) {
                 SearchResultsScreen(query: searchText)
             }
+            .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    NavigationLink(destination: SavedCitiesScreen()) {
+                        Text("Saved")
+                    }
+                }
+            }
             .onAppear{
                 handleOnAppear()
             }

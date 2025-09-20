@@ -53,17 +53,20 @@ struct CityDetailScreen: View {
                     
                     // Save City Button
                     Button(action: {
-                        // We'll add save logic later
+                        viewModel.toggleSave()
                     }) {
-                        Label("Save City", systemImage: "plus.circle.fill")
-                            .font(.headline)
-                            .foregroundColor(.white)
-                            .padding()
-                            .frame(maxWidth: .infinity)
-                            .background(Color.blue)
-                            .cornerRadius(12)
+                        
+                        Label(viewModel.isSaved ? "Remove City" : "Save City",
+                              systemImage: viewModel.isSaved ? "trash.circle.fill" : "plus.circle.fill")
+                        .font(.headline)
+                        .foregroundColor(.white)
+                        .padding()
+                        .frame(maxWidth: .infinity)
+                        .background(viewModel.isSaved ? Color.red : Color.blue)
+                        .cornerRadius(12)
                     }
                     .padding()
+                    
                 }
                 .padding()
             }
@@ -72,6 +75,9 @@ struct CityDetailScreen: View {
         .navigationBarTitleDisplayMode(.inline)
         .task {
             await viewModel.fetchWeather()
+        }
+        .onAppear {
+            viewModel.checkIfCityIsSaved()
         }
     }
 }

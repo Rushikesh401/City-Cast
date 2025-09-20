@@ -35,12 +35,15 @@ struct SearchResultsScreen: View {
                     
                     VStack {
                         List(searchViewModel.cities) { city in
-                            VStack(alignment: .leading) {
-                                Text(city.name)
-                                    .font(.headline)
-                                Text("\(city.region), \(city.country)")
-                                    .font(.subheadline)
-                                    .foregroundColor(.gray)
+                            NavigationLink(destination: CityDetailScreen(city: city)) {
+                                VStack(alignment: .leading) {
+                                    Text(city.name)
+                                        .font(.headline)
+                                    Text("\(city.region), \(city.country)")
+                                        .font(.subheadline)
+                                        .foregroundColor(.gray)
+                                }
+                                .padding(.vertical, 4)
                             }
                             .padding(.vertical, 4)
                         }

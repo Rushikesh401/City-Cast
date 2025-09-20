@@ -24,10 +24,14 @@ class CityDetailViewModel: ObservableObject {
 
     let city: City
     private let apiService: APIService
+    
+    @Published var isSaved: Bool = false
+    private let coreDataManager: CoreDataManager
 
-    init(city: City, apiService: APIService = .shared) {
+    init(city: City, apiService: APIService = .shared, coreDataManager: CoreDataManager = .shared) {
         self.city = city
         self.apiService = apiService
+        self.coreDataManager = coreDataManager
     }
 
     func fetchWeather() async {
@@ -50,5 +54,18 @@ class CityDetailViewModel: ObservableObject {
             self.state = .error(message: "Could not load weather data.")
             AppLogger.shared.log("Error fetching weather: \(error.localizedDescription)")
         }
+    }
+    
+    func checkIfCityIsSaved() {
+        isSaved = coreDataManager.isCitySaved(id: city.id)
+    }
+    
+    func toggleSave() {
+        if isSaved {
+            coreDataManager.deleteCity(id: city.id)
+        } else {
+            coreDataManager.saveCity(from: city)
+        }
+        isSaved.toggle()
     }
 }
