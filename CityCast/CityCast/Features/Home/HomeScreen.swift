@@ -49,7 +49,14 @@ struct HomeScreen: View {
             .navigationDestination(isPresented: $searchIsActive) {
                 SearchResultsScreen(query: searchText)
             }
+            .onAppear{
+                handleOnAppear()
+            }
         }
+    }
+    
+    private func handleOnAppear() {
+        searchText = ""
     }
 }
 
