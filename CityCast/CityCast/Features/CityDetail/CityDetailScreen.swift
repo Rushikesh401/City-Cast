@@ -6,69 +6,65 @@
 //
 
 import SwiftUI
+import MapKit
 
 struct CityDetailScreen: View {
 
     @StateObject private var viewModel: CityDetailViewModel
+    @State private var mapRegion: MKCoordinateRegion
 
     init(city: City) {
         _viewModel = StateObject(wrappedValue: CityDetailViewModel(city: city))
+        
+        _mapRegion = State(initialValue: MKCoordinateRegion(
+                    center: CLLocationCoordinate2D(latitude: city.latitude, longitude: city.longitude),
+                    span: MKCoordinateSpan(latitudeDelta: 0.1, longitudeDelta: 0.1) // This is the zoom level
+                ))
     }
     
     //let city: City
 
     var body: some View {
         ZStack {
-            Color.appBackground.ignoresSafeArea()
-            
-            switch viewModel.state {
-            case .loading:
-                ProgressView()
-                
-            case .success, .error:
-                VStack(spacing: 20) {
+            Map(coordinateRegion: $mapRegion)
+                .ignoresSafeArea()
+
+            VStack {
+                Spacer()
+
+                VStack(spacing: 15) {
                     Text(viewModel.city.name)
                         .font(.largeTitle)
                         .fontWeight(.bold)
-                    
+
                     Image(systemName: viewModel.weatherIconName)
                         .renderingMode(.original)
-                        .font(.system(size: 120))
-                    
+                        .font(.system(size: 80))
+
                     Text(viewModel.temperature)
-                        .font(.system(size: 70, weight: .bold))
-                    
+                        .font(.system(size: 50, weight: .light))
+
                     Text(viewModel.weatherDescription)
                         .font(.headline)
-                        .foregroundColor(.gray)
-                        .fontWeight(.bold)
-                    
-                    if case .error(let message) = viewModel.state {
-                        Text(message)
-                            .foregroundColor(.red)
-                            .padding()
-                    }
-                    
-                    Spacer()
-                    
-                    // Save City Button
+
                     Button(action: {
                         viewModel.toggleSave()
                     }) {
-                        
                         Label(viewModel.isSaved ? "Remove City" : "Save City",
                               systemImage: viewModel.isSaved ? "trash.circle.fill" : "plus.circle.fill")
-                        .font(.headline)
-                        .foregroundColor(.white)
-                        .padding()
-                        .frame(maxWidth: .infinity)
-                        .background(viewModel.isSaved ? Color.red : Color.blue)
-                        .cornerRadius(12)
+                            .font(.headline)
+                            .foregroundColor(.white)
+                            .padding()
+                            .frame(maxWidth: .infinity)
+                            .background(viewModel.isSaved ? Color.red : Color.blue)
+                            .cornerRadius(12)
                     }
-                    .padding()
-                    
                 }
                 .padding()
+                .padding(.bottom)
+                .background(.ultraThinMaterial)
+                .cornerRadius(20)
+                .padding(.horizontal)
             }
         }
         .navigationTitle("Weather Details")
