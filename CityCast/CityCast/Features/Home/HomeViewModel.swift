@@ -6,16 +6,27 @@
 //
 
 import Foundation
+import CoreLocation
+import Combine
 
 class HomeViewModel: ObservableObject {
 
     @Published var recentSearches: [String] = []
 
     private let persistenceService: PersistenceService
+    
+    @Published var userLocation: CLLocationCoordinate2D?
+
+    private let locationManager = LocationManager()
+    private var cancellables = Set<AnyCancellable>()
 
     init(persistenceService: PersistenceService = .shared) {
         self.persistenceService = persistenceService
         loadRecentSearches()
+        
+        locationManager.$location.sink { [weak self] location in
+            self?.userLocation = location
+        }.store(in: &cancellables)
     }
 
     func loadRecentSearches() {
@@ -40,5 +51,9 @@ class HomeViewModel: ObservableObject {
         searchText = term
         addSearch(term: term)
         isActive = true
+    }
+    
+    func requestLocation() {
+        locationManager.requestLocation()
     }
 }

@@ -6,6 +6,8 @@
 //
 
 import SwiftUI
+import Combine
+import _MapKit_SwiftUI
 
 struct HomeScreen: View {
 
@@ -20,7 +22,15 @@ struct HomeScreen: View {
     var body: some View {
         NavigationStack {
             ZStack {
-                Color.appBackground.ignoresSafeArea()
+                if let location = homeViewModel.userLocation {
+                    Map(coordinateRegion: .constant(MKCoordinateRegion(
+                        center: location,
+                        span: MKCoordinateSpan(latitudeDelta: 0.1, longitudeDelta: 0.1)
+                    )))
+                    .ignoresSafeArea()
+                } else {
+                    Color.appBackground.ignoresSafeArea()
+                }
 
                 VStack(alignment: .leading, spacing: 0) {
                     SearchBarView(text: $searchText, isFocused: $isSearchFieldFocused) {
@@ -53,6 +63,14 @@ struct HomeScreen: View {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     NavigationLink(destination: SavedCitiesScreen()) {
                         Text("Saved")
+                    }
+                }
+                
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Button(action: {
+                        homeViewModel.requestLocation()
+                    }) {
+                        Image(systemName: "location.circle.fill")
                     }
                 }
             }
