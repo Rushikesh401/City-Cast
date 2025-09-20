@@ -16,12 +16,23 @@ enum Constants {
     }
     
     enum API {
+        //MARK: GeoDB
         static let geoDBBaseURL = "https://wft-geo-db.p.rapidapi.com"
         static let rapidAPIHost = "wft-geo-db.p.rapidapi.com"
         
         static var rapidAPIKey: String {
             guard let key = Bundle.main.object(forInfoDictionaryKey: "RAPIDAPI_KEY") as? String else {
                 fatalError("RAPIDAPI_KEY not found in Info.plist. Make sure you've set it up correctly in Keys.xcconfig.")
+            }
+            return key
+        }
+        
+        //MARK: OpenWeatherMap
+        static let openWeatherBaseURL = "https://api.openweathermap.org"
+        
+        static var openWeatherAPIKey: String {
+            guard let key = Bundle.main.object(forInfoDictionaryKey: "OWM_KEY") as? String else {
+                fatalError("OPENWEATHERMAP_API_KEY not found in Info.plist...")
             }
             return key
         }

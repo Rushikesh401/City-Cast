@@ -4,5 +4,7 @@
 <dict>
 	<key>RAPIDAPI_KEY</key>
 	<string>$(RAPIDAPI_KEY)</string>
+	<key>OWM_KEY</key>
+	<string>$(OWM_KEY)</string>
 </dict>
 </plist>

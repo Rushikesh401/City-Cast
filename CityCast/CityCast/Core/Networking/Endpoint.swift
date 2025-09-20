@@ -29,4 +29,18 @@ extension Endpoint {
             ]
         )
     }
+    
+    static func fetchWeather(lat: Double, lon: Double) -> Self {
+        Endpoint(
+            path: "/data/2.5/weather",
+            queryItems: [
+                URLQueryItem(name: "lat", value: String(lat)),
+                URLQueryItem(name: "lon", value: String(lon)),
+                URLQueryItem(name: "appid", value: Constants.API.openWeatherAPIKey),
+                URLQueryItem(name: "units", value: "metric")
+            ]
+        )
+    }
+    
+    
 }
