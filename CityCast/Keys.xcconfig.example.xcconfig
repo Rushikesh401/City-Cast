@@ -8,4 +8,5 @@
 // Configuration settings file format documentation can be found at:
 // https://developer.apple.com/documentation/xcode/adding-a-build-configuration-file-to-your-project
 
-RAPIDAPI_KEY = "PASTE_YOUR_RAPIDAPI_KEY_HERE"
+RAPIDAPI_KEY = "PASTE_RAPIDAPI_KEY_HERE"
+OWM_KEY      = "PASTE_OPEN_WEATHER_MAP_KEY_HERE"
