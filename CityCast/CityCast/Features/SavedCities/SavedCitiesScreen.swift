@@ -16,7 +16,7 @@ struct SavedCitiesScreen: View {
             Color.appBackground.ignoresSafeArea()
 
             if viewModel.savedCities.isEmpty {
-                Text("You haven't saved any cities yet.")
+                Text(Constants.SavedCities.noSavedCitiesText)
                     .foregroundColor(.gray)
                     .fontWeight(.bold)
             } else {
@@ -25,7 +25,7 @@ struct SavedCitiesScreen: View {
                         // Each row is a link to the detail screen.
                         NavigationLink(destination: CityDetailScreen(city: mapSavedCityToCity(savedCity: city))) {
                             VStack(alignment: .leading) {
-                                Text(city.name ?? "Unknown City")
+                                Text(city.name ?? Constants.SavedCities.unknownCityErrorText)
                                     .font(.headline)
                                 Text("\(city.region ?? ""), \(city.country ?? "")")
                                     .font(.subheadline)
@@ -39,7 +39,7 @@ struct SavedCitiesScreen: View {
                 .listStyle(.plain)
             }
         }
-        .navigationTitle("Saved Cities")
+        .navigationTitle(Constants.SavedCities.navigationTitle)
         .navigationBarTitleDisplayMode(.inline)
         .onAppear {
             viewModel.fetchSavedCities()

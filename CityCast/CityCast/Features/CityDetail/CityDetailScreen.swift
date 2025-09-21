@@ -52,7 +52,7 @@ struct CityDetailScreen: View {
                         
                         // OFFLINE WARNING MESSAGE
                         if viewModel.isShowingOfflineData {
-                            Text("You are viewing old data. Connect to the internet for the latest weather.")
+                            Text(Constants.CityDetails.offlineWarningMessage)
                                 .font(.caption)
                                 .foregroundColor(.orange)
                                 .multilineTextAlignment(.center)
@@ -63,8 +63,8 @@ struct CityDetailScreen: View {
                         Button(action: {
                             viewModel.toggleSave()
                         }) {
-                            Label(viewModel.isSaved ? "Remove City" : "Save City",
-                                  systemImage: viewModel.isSaved ? "trash.circle.fill" : "plus.circle.fill")
+                            Label(viewModel.isSaved ? Constants.CityDetails.removeCityText :  Constants.CityDetails.saveCityText,
+                                  systemImage: viewModel.isSaved ? Constants.Images.trashIcon : Constants.Images.plusIcon)
                             .font(.headline)
                             .foregroundColor(.white)
                             .padding()
@@ -83,7 +83,7 @@ struct CityDetailScreen: View {
                 .padding(.horizontal)
             }
         }
-        .navigationTitle("Weather Details")
+        .navigationTitle(Constants.CityDetails.navigationTitle)
         .navigationBarTitleDisplayMode(.inline)
         .task {
             await viewModel.fetchWeather()

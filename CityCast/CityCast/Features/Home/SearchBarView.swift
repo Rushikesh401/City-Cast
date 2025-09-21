@@ -21,14 +21,14 @@ struct SearchBarView: View {
     
     var body: some View {
         HStack {
-            Image(systemName: "magnifyingglass")
+            Image(systemName: Constants.Images.magnifyingglassIcon)
                 .foregroundColor(.gray)
             
             TextField(Constants.Home.searchPlaceholder, text: $text)
                 .focused($isFocused)
             
             Button(action: onSearch) {
-                Text("Search")
+                Text(Constants.Home.searchText)
             }
             .disabled(!isSearchButtonEnabled)
         }

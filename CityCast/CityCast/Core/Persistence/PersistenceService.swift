@@ -12,12 +12,12 @@ class PersistenceService {
     static let shared = PersistenceService()
     private let userDefaults = UserDefaults.standard
 
-    let recentsKey = "RecentSearches"
+  //  let recentsKey = "RecentSearches"
 
     private init() {}
 
     func fetchRecentSearches() -> [String] {
-        return userDefaults.stringArray(forKey: recentsKey) ?? []
+        return userDefaults.stringArray(forKey: Constants.Persistence.recentSearchesKey) ?? []
     }
 
     func addRecentSearch(term: String) {
@@ -34,6 +34,6 @@ class PersistenceService {
             currentTerms = Array(currentTerms.prefix(maxRecents))
         }
 
-        userDefaults.set(currentTerms, forKey: recentsKey)
+        userDefaults.set(currentTerms, forKey: Constants.Persistence.recentSearchesKey)
     }
 }

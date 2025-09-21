@@ -62,7 +62,7 @@ struct HomeScreen: View {
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     NavigationLink(destination: SavedCitiesScreen()) {
-                        Text("Saved")
+                        Text(Constants.Home.savedText)
                     }
                 }
                 
@@ -70,7 +70,7 @@ struct HomeScreen: View {
                     Button(action: {
                         homeViewModel.requestLocation()
                     }) {
-                        Image(systemName: "location.circle.fill")
+                        Image(systemName: Constants.Images.locationIcon)
                     }
                 }
             }

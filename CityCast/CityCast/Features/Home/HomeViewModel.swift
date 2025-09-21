@@ -43,7 +43,7 @@ class HomeViewModel: ObservableObject {
         var currentSearches = persistenceService.fetchRecentSearches()
         currentSearches.remove(atOffsets: offsets)
 
-        UserDefaults.standard.set(currentSearches, forKey: "RecentSearches")
+        UserDefaults.standard.set(currentSearches, forKey: Constants.Persistence.recentSearchesKey)
         loadRecentSearches()
     }
 
