@@ -37,6 +37,8 @@ struct SavedCitiesScreen: View {
                     .onDelete(perform: viewModel.deleteCity)
                 }
                 .listStyle(.plain)
+                .cornerRadius(10)
+                .padding(.horizontal)
             }
         }
         .navigationTitle(Constants.SavedCities.navigationTitle)
