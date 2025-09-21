@@ -16,6 +16,14 @@ CityCast is a clean, modern iOS weather application built as a technical assignm
 
 ---
 
+## 📸 Screenshots
+
+| Home Screen | Search Results | City Detail |
+|:---:|:---:|:---:|
+| ![Home Screen](Screenshots/Home_Screen.PNG) | ![Search Results](Screenshots/Search_Screen.PNG) | ![City Detail](Screenshots/City_Detail.PNG) |
+
+---
+
 ## Setup Instructions
 
 To build and run this project, you will need API keys for both GeoDB Cities and OpenWeatherMap.
